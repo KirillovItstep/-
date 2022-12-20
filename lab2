@@ -1,0 +1,49 @@
+//Составить программу для вычисления функции с помощью разложения в ряд
+
+#include <stdio.h>
+#include <windows.h>
+#include <cmath>
+
+//Вывести линию из дефисов
+void printLine(){
+	for (int i=0; i<35; i++)
+		printf("-");
+	printf("\n");
+}
+
+//Вывести заголовок таблицы
+void printHeader(){
+	printLine();
+	printf("|%4s   |%4s     |%4s |%4s   |\n", "x","F","n","math F");
+	printLine();
+}
+
+int main(){
+	//Исходные данные
+	double xn = -0.9;
+	double xk=-0.7;
+	double dx = 0.02;
+	double eps = 1e-20;
+	printHeader();
+
+	double x = xn;
+	while (x<xk){
+	double a = x;	
+	double sum = 0;
+	int index = 1; //Счетчик
+	while (abs(a)>eps){ //Пока не будет достигнута заданная погрешность
+		sum+=a/index;
+		a*=x;
+		index++;
+		if (index>500) break; //Если число итераций больше 500, цикл прерывается
+	}
+	sum=-sum;
+	double y=log(1-x);	//Проверочная формула
+	printf("| %.2f | %.5f | %d | %.5f |\n",x, sum, index, y);
+	x+=dx;
+	}
+	printLine();
+	system("pause");
+  return 0;
+}
+
